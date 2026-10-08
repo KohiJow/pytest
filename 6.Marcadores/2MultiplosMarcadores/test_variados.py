@@ -1,8 +1,9 @@
 """Mais de um marcador no mesmo teste e expressoes de selecao.
 
 `test_soma_mista` e `lento` e `rapido` ao mesmo tempo. O `-m` aceita expressao
-booleana: `-m "lento and rapido"` pega so ele, `-m "lento and not rapido"`
-pega so `test_soma_lenta`, `-m "lento or rapido"` pega os tres.
+booleana. Rodando so esta pasta: `-m "lento and rapido"` pega apenas ele,
+`-m "lento and not rapido"` pega apenas `test_soma_lenta` e `-m "lento or
+rapido"` pega os tres.
 """
 
 import time
