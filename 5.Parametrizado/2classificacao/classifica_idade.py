@@ -1,9 +1,11 @@
-def classifica_idade(idade):
+"""Regra de faixa etaria testada em `test_classifica_idade.py`."""
+
+
+def classifica_idade(idade: int) -> str:
     if idade < 12:
         return "Criança"
-    elif idade < 18:
+    if idade < 18:
         return "Adolescente"
-    elif idade < 60:
+    if idade < 60:
         return "Adulto"
-    else:
-        return "Idoso"
+    return "Idoso"
