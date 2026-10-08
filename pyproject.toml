@@ -1,0 +1,56 @@
+# Unico arquivo de configuracao do repositorio: pytest e ruff leem daqui.
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+# --strict-markers: marcador que nao esta na lista abaixo vira erro de coleta,
+# em vez de passar em silencio por um erro de digitacao.
+# -ra: no resumo final, lista tudo que nao foi "passed" (skip, xfail, erro).
+addopts = "--strict-markers -ra"
+markers = [
+    "lento: teste que leva alguns segundos para rodar",
+    "rapido: teste rapido",
+    "crianca: faixa de idade crianca",
+    "adolescente: faixa de idade adolescente",
+    "adulto: faixa de idade adulto",
+    "idoso: faixa de idade idoso",
+]
+# strict: so vira teste assincrono quem tem @pytest.mark.asyncio explicito.
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+# O repositorio precisa rodar no Python 3.9, entao o ruff nao sugere sintaxe mais nova.
+target-version = "py39"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle (erros)
+    "W",    # pycodestyle (avisos)
+    "F",    # pyflakes: import sem uso, variavel sem uso, etc.
+    "I",    # isort: ordem dos imports
+    "UP",   # pyupgrade: sintaxe moderna dentro do que o 3.9 permite
+    "B",    # flake8-bugbear: armadilhas comuns
+    "N",    # pep8-naming
+    "SIM",  # flake8-simplify
+    "PT",   # flake8-pytest-style: boas praticas especificas do pytest
+    "RUF",  # regras proprias do ruff
+]
+
+[tool.ruff.lint.isort]
+# Os modulos testados ficam na mesma pasta do teste e sao importados pelo nome
+# (ver README). Para o isort, eles sao "primeira parte" e nao biblioteca externa.
+known-first-party = [
+    "app",
+    "calcula_total",
+    "classifica_idade",
+    "divisao",
+    "faixa_etaria",
+    "funcoes",
+    "busca_dados",
+    "funcao_lenta",
+    "main",
+    "soma",
+    "validacoes",
+    "verifica_idade",
+]

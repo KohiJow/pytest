@@ -3,3 +3,4 @@ pytest-asyncio>=0.23
 requests>=2.31
 SQLAlchemy>=2.0
 pytest-cov>=5.0
+ruff>=0.5
