@@ -1,5 +1,7 @@
 import time
+
 from my_code import long_running_function
+
 
 def test_long_running_function_performance():
     start_time = time.time()

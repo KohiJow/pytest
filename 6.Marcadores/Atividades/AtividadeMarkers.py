@@ -1,12 +1,12 @@
 def classifica_Idade(idade):
     if idade < 13:
-        return 'criança'
-    
-    elif idade <20:
-        return 'adolescente'
-    
+        return "criança"
+
+    elif idade < 20:
+        return "adolescente"
+
     elif idade < 60:
-        return 'adulto'
-    
+        return "adulto"
+
     else:
-        return 'idoso'
+        return "idoso"
