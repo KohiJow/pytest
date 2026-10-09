@@ -1,9 +1,12 @@
 """Setup e teardown com `yield`.
 
 O que vem antes do `yield` roda antes do teste (setup) e o que vem depois roda
-ao final, mesmo que o teste falhe (teardown). Aqui o setup abre uma conexao com
-um SQLite em memoria e o teardown fecha. Como esse banco so existe enquanto a
-conexao existe, cada teste comeca com um banco vazio.
+ao final, mesmo que o teste falhe (teardown). Aqui o setup cria uma engine e
+abre uma conexao com um SQLite em memoria; o teardown fecha a conexao e
+descarta a engine. O `dispose()` importa: `close()` sozinho so devolve a
+conexao crua ao pool do SQLAlchemy, e o banco em memoria continua vivo la
+dentro. Como cada teste ganha uma engine nova e a anterior foi descartada,
+cada um comeca com um banco vazio.
 """
 
 from collections.abc import Iterator
@@ -18,7 +21,9 @@ def conexao() -> Iterator[Connection]:
     engine = sqlalchemy.create_engine("sqlite:///:memory:")
     conexao = engine.connect()
     yield conexao
-    conexao.close()  # teardown: roda depois do teste, mesmo se ele falhar
+    # teardown: roda depois do teste, mesmo se ele falhar
+    conexao.close()
+    engine.dispose()
 
 
 def test_conexao_responde(conexao: Connection) -> None:
