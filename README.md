@@ -1,13 +1,15 @@
-# Estudos de pytest
+# pytest studies
+English | [Português](README.pt-BR.md)
 
-Material que montei estudando pytest a fundo, organizado por tema e em ordem de
-dificuldade. Cada pasta tem o codigo sendo testado e os testes dele, e cada
-arquivo comeca com uma docstring explicando o conceito que ele mostra. A ideia
-e ler na ordem, rodar um tema por vez e mexer no codigo para ver o que quebra.
+Material I put together while studying pytest in depth, organized by topic and
+in order of difficulty. Each folder has the code under test and its tests, and
+each file starts with a docstring explaining the concept it shows. The idea is
+to read in order, run one topic at a time and tinker with the code to see what
+breaks.
 
-A suite toda passa: 94 testes, nenhum warning, em Python 3.9, 3.11 e 3.12.
+The whole suite passes: 94 tests, no warnings, on Python 3.9, 3.11 and 3.12.
 
-## Como rodar
+## How to run
 
 ```bash
 python3 -m venv .venv
@@ -16,40 +18,40 @@ pip install -r requirements.txt
 pytest
 ```
 
-Toda a configuracao fica no `pyproject.toml`, o unico arquivo de configuracao
-do repositorio: marcadores registrados, modo do pytest-asyncio e regras do
-ruff, cada bloco com um comentario dizendo o porque.
+All the configuration lives in `pyproject.toml`, the only configuration file in
+the repository: registered markers, the pytest-asyncio mode and the ruff rules,
+each block with a comment explaining why.
 
-## Trilha de estudo
+## Study path
 
-A numeracao das pastas e a ordem original do estudo e tem buracos (nao existe
-1 nem 9); preferi manter os numeros a renumerar tudo. A ordem de leitura
-sugerida e a da tabela.
+The folder numbering is the original order of study and has gaps (there is no
+1 and no 9); I preferred to keep the numbers rather than renumber everything.
+The suggested reading order is the one in the table.
 
-| Ordem | Pasta | O que ensina | Rodar so isso |
+| Order | Folder | What it teaches | Run just this |
 |---|---|---|---|
-| 1 | `2.Intro` | como o pytest acha arquivos e funcoes de teste, e o que ele mostra quando um `assert` falha | `pytest 2.Intro -v` |
-| 2 | `3.PrimeirosTestes` | varios asserts num teste, teste que importa o codigo de outro modulo, mensagem no assert, diff de listas e dicts | `pytest 3.PrimeirosTestes -v` |
-| 3 | `4.Fixtures` | fixture basica, `conftest.py`, mock de resposta HTTP com `spec`, setup e teardown com `yield`, escopo function, module e session | `pytest 4.Fixtures -v` |
-| 4 | `5.Parametrizado` | `parametrize` simples, ids legiveis com `pytest.param`, casos de fronteira, `approx` para float, parametrize empilhado (produto cartesiano) | `pytest 5.Parametrizado -v` |
-| 5 | `6.Marcadores` | marcadores registrados, selecao com `-m` e expressoes booleanas, `--strict-markers` | `pytest 6.Marcadores -v` |
-| 6 | `7.Excecoes` | `pytest.raises`, `match` para conferir a mensagem, `exc_info.value` | `pytest 7.Excecoes -v` |
-| 7 | `8.Plugins` | pytest-cov: medir cobertura e exigir um minimo | `pytest 8.Plugins --cov=8.Plugins` |
-| 8 | `10.Integracaoendtoend` | teste de integracao com os objetos reais e uma fixture que entrega estado limpo | `pytest 10.Integracaoendtoend -v` |
-| 9 | `11.cicd` | o projeto minimo que usei para montar o workflow do GitHub Actions | `pytest 11.cicd -v` |
-| 10 | `12.Avancado` | teste de tempo de execucao com relogio falso (`monkeypatch`) e teste assincrono com pytest-asyncio | `pytest 12.Avancado -v` |
+| 1 | `2.Intro` | how pytest finds test files and functions, and what it shows when an `assert` fails | `pytest 2.Intro -v` |
+| 2 | `3.PrimeirosTestes` | several asserts in one test, a test that imports code from another module, a message in the assert, diffs of lists and dicts | `pytest 3.PrimeirosTestes -v` |
+| 3 | `4.Fixtures` | basic fixture, `conftest.py`, mocking an HTTP response with `spec`, setup and teardown with `yield`, scope (function, module and session) | `pytest 4.Fixtures -v` |
+| 4 | `5.Parametrizado` | simple `parametrize`, readable ids with `pytest.param`, boundary cases, `approx` for floats, stacked parametrize (Cartesian product) | `pytest 5.Parametrizado -v` |
+| 5 | `6.Marcadores` | registered markers, selection with `-m` and boolean expressions, `--strict-markers` | `pytest 6.Marcadores -v` |
+| 6 | `7.Excecoes` | `pytest.raises`, `match` to check the message, `exc_info.value` | `pytest 7.Excecoes -v` |
+| 7 | `8.Plugins` | pytest-cov: measuring coverage and requiring a minimum | `pytest 8.Plugins --cov=8.Plugins` |
+| 8 | `10.Integracaoendtoend` | integration test with the real objects and a fixture that provides a clean state | `pytest 10.Integracaoendtoend -v` |
+| 9 | `11.cicd` | the minimal project I used to set up the GitHub Actions workflow | `pytest 11.cicd -v` |
+| 10 | `12.Avancado` | an execution time test with a fake clock (`monkeypatch`) and an async test with pytest-asyncio | `pytest 12.Avancado -v` |
 
-Para rodar um unico teste, use `-k` com um pedaco do nome ou o id completo:
+To run a single test, use `-k` with part of its name, or the full id:
 
 ```bash
 pytest 5.Parametrizado -k fronteira -v
 pytest "5.Parametrizado/2classificacao/test_classifica_idade.py::test_classifica_idade[fronteira_adulto]"
 ```
 
-## Por marcador
+## By marker
 
-Os marcadores estao declarados no `pyproject.toml` com `--strict-markers`
-ligado: marcador escrito errado e erro de coleta, nao aviso.
+The markers are declared in `pyproject.toml` with `--strict-markers` turned on:
+a misspelled marker is a collection error, not a warning.
 
 ```bash
 pytest -m lento -v              # so os quatro testes lentos (uns 7 segundos)
@@ -58,62 +60,62 @@ pytest -m "lento and not rapido" -v
 pytest -m adulto -v             # marcadores da atividade de 6.Marcadores
 ```
 
-## Cobertura
+## Coverage
 
 ```bash
 pytest 8.Plugins --cov=8.Plugins --cov-report=term-missing
 pytest 8.Plugins --cov=8.Plugins --cov-fail-under=100
 ```
 
-A segunda forma falha se a cobertura cair abaixo de 100%; e o que o CI roda.
+The second form fails if coverage drops below 100%; that is what CI runs.
 
-## Lint e formatacao
+## Linting and formatting
 
 ```bash
 ruff check .          # regras selecionadas no pyproject.toml
 ruff format --check . # ou `ruff format .` para aplicar
 ```
 
-O alvo e Python 3.9, entao o ruff nao sugere sintaxe mais nova (nada de
-`match`, nem `X | Y` em anotacao). Onde um tipo pode ser `None`, o codigo usa
-`Optional` do `typing`.
+The target is Python 3.9, so ruff does not suggest newer syntax (no `match`,
+and no `X | Y` in annotations). Where a type can be `None`, the code uses
+`Optional` from `typing`.
 
-## Por que nao tem `__init__.py`
+## Why there is no `__init__.py`
 
-Os testes importam o codigo pelo nome do modulo (`from soma import soma`).
-Isso funciona porque, sem `__init__.py`, o pytest insere a pasta de cada
-arquivo de teste no `sys.path` antes de importa-lo (modo de import `prepend`,
-o padrao). A unica regra e que o nome de cada modulo e de cada arquivo de
-teste seja unico no repositorio inteiro. A lista desses modulos esta em
-`known-first-party` no `pyproject.toml`, para o ruff agrupar os imports
-direito.
+The tests import the code by module name (`from soma import soma`). This works
+because, without `__init__.py`, pytest inserts the folder of each test file into
+`sys.path` before importing it (the `prepend` import mode, which is the
+default). The only rule is that the name of every module and every test file
+must be unique across the whole repository. The list of these modules is in
+`known-first-party` in `pyproject.toml`, so that ruff groups the imports
+correctly.
 
-## Dependencias
+## Dependencies
 
-A maior parte dos testes so precisa do pytest. Fora dele:
+Most of the tests only need pytest. Beyond that:
 
-| O que | Onde |
+| What | Where |
 |---|---|
-| `SQLAlchemy` | `4.Fixtures/2setupteardown`, SQLite em memoria no setup/teardown |
-| `requests` | `4.Fixtures/1Exemplos/test_mock.py`, so para o `spec` do MagicMock |
+| `SQLAlchemy` | `4.Fixtures/2setupteardown`, in-memory SQLite in setup/teardown |
+| `requests` | `4.Fixtures/1Exemplos/test_mock.py`, only for the MagicMock `spec` |
 | `pytest-asyncio` | `12.Avancado/2.assincrono` |
-| `pytest-cov` | cobertura em `8.Plugins` e no CI |
-| `ruff` | lint e formatacao |
+| `pytest-cov` | coverage in `8.Plugins` and in CI |
+| `ruff` | linting and formatting |
 
 ## CI
 
-O workflow em `.github/workflows/tests.yml` roda a cada push e pull request,
-em dois jobs: `ruff` (lint e formatacao) e `pytest`, este numa matriz com
-Python 3.9, 3.11 e 3.12. Depois da suite, o job de testes roda a cobertura de
-`8.Plugins` com `--cov-fail-under=100`.
+The workflow in `.github/workflows/tests.yml` runs on every push and pull
+request, in two jobs: `ruff` (linting and formatting) and `pytest`, the latter
+in a matrix with Python 3.9, 3.11 and 3.12. After the suite, the test job runs
+coverage on `8.Plugins` with `--cov-fail-under=100`.
 
-A pasta `11.cicd` guarda o exemplo minimo (uma funcao, um teste e um
-`requirements.txt` so com pytest) que usei para entender o workflow antes de
-aplicar no repositorio todo.
+The `11.cicd` folder holds the minimal example (one function, one test and a
+`requirements.txt` with only pytest) that I used to understand the workflow
+before applying it to the whole repository.
 
-## Por que esse repositorio existe
+## Why this repository exists
 
-Trabalho com QA e queria sair do "sei escrever um assert" para entender o que o
-pytest oferece de verdade: fixture com escopo certo, parametrizacao no lugar de
-copiar e colar, marcador para separar o que e rapido do que e lento, e a suite
-rodando sozinha num pipeline.
+I work in QA and wanted to move from "I know how to write an assert" to
+understanding what pytest really offers: fixtures with the right scope,
+parametrization instead of copy and paste, markers to separate what is fast
+from what is slow, and the suite running on its own in a pipeline.
